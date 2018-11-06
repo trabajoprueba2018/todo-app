@@ -1,4 +1,4 @@
-package com.imint.example.configuration;
+package com.dorefactor.todoapp.configuration;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

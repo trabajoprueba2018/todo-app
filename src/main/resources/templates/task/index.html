@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+
+<div class="container">
+    <div layout:fragment="content">
+        <h1>Tasks</h1>
+        <table class="table table-hover">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            <th:block th:each="task : ${tasks}">
+                <tr>
+                    <td th:text="${task.id}">1</td>
+                    <td th:text="${task.name}">Task A</td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

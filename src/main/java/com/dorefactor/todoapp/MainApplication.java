@@ -1,4 +1,4 @@
-package com.imint.example;
+package com.dorefactor.todoapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
