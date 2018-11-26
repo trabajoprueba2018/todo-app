@@ -1,0 +1,34 @@
+language: java
+sudo: enabled
+jdk: openjdk10
+
+addons:
+  hosts:
+    - mysql
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
+services:
+  - docker
+
+before_install:
+  - sudo chmod +x scripts/bash/*
+  - ./scripts/bash/prepare-build.sh
+
+jobs:
+  include:
+  - stage: unit-tests
+    script:
+      - ./scripts/bash/unit-test.sh
+
+  - stage: integration-tests
+    script:
+      - ./scripts/bash/it-test.sh
+
+  - stage: package
+    script:
+      - ./scripts/bash/package.sh
