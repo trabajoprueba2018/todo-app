@@ -1,2 +1,23 @@
 use mysql;
 
+DROP SCHEMA IF EXISTS todo;
+
+CREATE SCHEMA IF NOT EXISTS todo
+  DEFAULT CHARACTER SET utf8mb4;
+
+DROP USER IF EXISTS 'todo'@'localhost';
+DROP USER IF EXISTS 'todo'@'%';
+
+CREATE USER IF NOT EXISTS 'todo'@'localhost'
+  IDENTIFIED BY 'todo123';
+
+CREATE USER IF NOT EXISTS 'todo'@'%'
+  IDENTIFIED BY 'todo123';
+
+GRANT ALL PRIVILEGES ON todo.* TO 'todo'@'localhost'
+IDENTIFIED BY 'todo123';
+
+GRANT ALL PRIVILEGES ON todo.* TO 'todo'@'%'
+IDENTIFIED BY 'todo123';
+
+FLUSH PRIVILEGES;
