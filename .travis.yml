@@ -11,6 +11,10 @@ addons:
     packages:
       - mysql-server
       - mysql-client
+  sonarcloud:
+    organization: "dorefactor"
+    token:
+      secure: $SONAR_TOKEN
 
 services:
   - docker
@@ -28,6 +32,10 @@ jobs:
   - stage: integration-tests
     script:
       - ./scripts/bash/it-test.sh
+
+  - stage: static-analysis
+    script:
+      - sonar-scanner
 
   - stage: package
     script:
