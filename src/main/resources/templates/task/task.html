@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+
+<div class="container">
+    <div layout:fragment="content">
+        <h1>Task</h1>
+
+        <form>
+            <div class="form-group">
+                <label for="id">Id</label>
+                <input type="text" class="form-control" id="id" th:field="${task.id}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" th:field="${task.name}" disabled>
+            </div>
+            <a class="btn btn-primary" href="#" th:href="@{/tasks}">Back</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

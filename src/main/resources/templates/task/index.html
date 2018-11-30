@@ -17,7 +17,9 @@
             </tr>
             <th:block th:each="task : ${tasks}">
                 <tr>
-                    <td th:text="${task.id}">1</td>
+                    <td>
+                        <a href="#" th:href="@{|/tasks/${task.id}|}" th:text="${task.id}">1</a>
+                    </td>
                     <td th:text="${task.name}">Task A</td>
                 </tr>
             </th:block>

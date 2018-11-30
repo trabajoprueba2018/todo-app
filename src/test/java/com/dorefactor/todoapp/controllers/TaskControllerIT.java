@@ -13,8 +13,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Optional;
+
 import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -71,6 +75,29 @@ public class TaskControllerIT {
         ;
 
         verify(taskService).getAll();
+    }
+
+    @Test
+    public void testGetById() throws Exception {
+        final Task task = Task
+                .builder()
+                .id(1L)
+                .name("Task A")
+                .build();
+
+
+        when(taskService.getById(1L)).thenReturn(Optional.of(task));
+
+        mockMvc()
+                .perform(
+                        get("/tasks/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("task/task"))
+                .andExpect(model().attribute("task", hasProperty("id", is(1L))))
+                .andExpect(model().attribute("task", hasProperty("name", is("Task A"))))
+        ;
+
+        verify(taskService).getById(1L);
     }
 
     private MockMvc mockMvc() {
