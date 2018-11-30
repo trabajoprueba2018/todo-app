@@ -2,14 +2,21 @@ package com.dorefactor.todoapp.domain;
 
 public class Task {
 
-    private final long id;
-    private final String name;
-    private final String description;
+    private long id;
+    private String name;
+    private String description;
+
+    public Task() {
+    }
 
     public Task(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public long getId() {
@@ -20,8 +27,16 @@ public class Task {
         return name;
     }
 
+    public void setName(final String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     public static class Builder {
@@ -48,10 +63,6 @@ public class Task {
         public Task build() {
             return new Task(id, name, description);
         }
-    }
-    
-    public static Builder builder() {
-        return new Builder();
     }
 
 }

@@ -24,4 +24,9 @@ public class TaskRepository {
         return Optional.ofNullable(sqlSession.selectOne("com.dorefactor.todoapp.repositories.TaskRepository.findById", id));
     }
 
+    public Task insert(final Task task) {
+        sqlSession.insert("com.dorefactor.todoapp.repositories.TaskRepository.insert", task);
+        return task;
+    }
+
 }

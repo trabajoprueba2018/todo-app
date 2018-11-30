@@ -10,4 +10,8 @@
         SELECT * FROM task WHERE id = #{id}
     </select>
 
+    <insert id="insert" parameterType="com.dorefactor.todoapp.domain.Task" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO task (`name`, description) VALUES (#{name}, #{description})
+    </insert>
+
 </mapper>

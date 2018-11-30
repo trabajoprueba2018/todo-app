@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration
 @Import({MySqlDataSourceConfiguration.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TaskRepositoryIT {
+public class TaskRepositoryIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     private static final String INSERT_TASK = "INSERT INTO task (NAME, DESCRIPTION) VALUES (?, ?)";
     private static final String FIND_LAST_ID = "SELECT LAST_INSERT_ID()";
@@ -46,7 +49,7 @@ public class TaskRepositoryIT {
         final List<Task> actualTasks = taskRepository.findAll();
 
         assertFalse(actualTasks.isEmpty());
-        assertThat(actualTasks.size(), is(2));
+        assertThat(actualTasks.size(), is(not(nullValue())));
     }
 
     @Test
@@ -64,6 +67,15 @@ public class TaskRepositoryIT {
         assertThat(actualTask.getDescription(), is(expectedTask.getDescription()));
     }
 
+    @Test
+    public void testInsert() {
+        final Task expectedTask = createAndSaveTask("test", "description");
+
+        final Task task = taskRepository.insert(expectedTask);
+
+        assertThat(task.getId(), is(getFindLastId()));
+    }
+
     private Task createAndSaveTask(final String name, final String description) {
         final long id = insertTask(name, description);
         return buildTask(id, name, description);
@@ -71,6 +83,10 @@ public class TaskRepositoryIT {
 
     private long insertTask(final String name, final String description) {
         jdbcTemplate.update(INSERT_TASK, name, description);
+        return jdbcTemplate.queryForObject(FIND_LAST_ID, Long.class);
+    }
+
+    private long getFindLastId() {
         return jdbcTemplate.queryForObject(FIND_LAST_ID, Long.class);
     }
 

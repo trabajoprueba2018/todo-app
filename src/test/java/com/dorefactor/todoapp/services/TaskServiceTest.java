@@ -62,6 +62,19 @@ public class TaskServiceTest {
         verify(taskRepository).findById(1L);
     }
 
+    @Test
+    public void testAddTask() {
+        final Task task = buildTask(1L, "Task A");
+
+        when(taskRepository.insert(task)).thenReturn(task);
+
+        final Optional<Task> actualTask = taskService.addTask(task);
+
+        assertTrue(actualTask.isPresent());
+        assertThat(actualTask.get(), is(task));
+        verify(taskRepository).insert(task);
+    }
+
     private Task buildTask(final long id,
                            final String name) {
         return Task

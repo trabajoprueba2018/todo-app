@@ -24,4 +24,8 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
+    public Optional<Task> addTask(final Task task) {
+        return Optional.of(taskRepository.insert(task));
+    }
+
 }
