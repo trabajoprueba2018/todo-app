@@ -12,7 +12,8 @@ addons:
       - mysql-server
       - mysql-client
   sonarcloud:
-    organization: "dorefactor"
+    # organization: "dorefactor"
+    organization: dorefactor_todo-app
     token:
       secure: $SONAR_TOKEN
 
