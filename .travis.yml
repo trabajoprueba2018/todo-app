@@ -27,7 +27,8 @@ jobs:
   include:
   - stage: static-analysis
     script:
-      - sonar-scanner
+      # - sonar-scanner
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
   - stage: unit-tests
     script:
