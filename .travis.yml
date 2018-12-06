@@ -12,8 +12,7 @@ addons:
       - mysql-server
       - mysql-client
   sonarcloud:
-    # organization: "dorefactor"
-    organization: dorefactor_todo-app
+    organization: "dorefactor"
     token:
       secure: $SONAR_TOKEN
 
@@ -28,8 +27,8 @@ jobs:
   include:
   - stage: static-analysis
     script:
-      # - sonar-scanner
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+      - sonar-scanner
+      # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
   - stage: unit-tests
     script:
