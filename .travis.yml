@@ -30,11 +30,6 @@ before_install:
 
 jobs:
   include:
-  - stage: static-analysis
-    script:
-      # - sonar-scanner
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=dorefactor_todo-app
-
   - stage: unit-tests
     script:
       - ./scripts/bash/unit-test.sh
@@ -42,6 +37,10 @@ jobs:
   - stage: integration-tests
     script:
       - ./scripts/bash/it-test.sh
+
+  - stage: static-analysis
+    script:
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=dorefactor_todo-app
 
   - stage: package
     script:
