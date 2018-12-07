@@ -40,7 +40,7 @@ jobs:
 
   - stage: static-analysis
     script:
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=dorefactor_todo-app -Dsonar.host.url=https://sonarcloud.io
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=dorefactor_todo-app -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=dorefactor -Dsonar.login=$SONAR_TOKEN
 
   - stage: package
     script:
