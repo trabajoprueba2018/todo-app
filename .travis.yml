@@ -1,6 +1,7 @@
 language: java
 sudo: enabled
 jdk: openjdk10
+install: true
 
 addons:
   hosts:
@@ -11,6 +12,14 @@ addons:
     packages:
       - mysql-server
       - mysql-client
+  sonarcloud:
+    organization: "dorefactor"
+    token:
+      secure: $SONAR_TOKEN
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 
 services:
   - docker
@@ -28,6 +37,10 @@ jobs:
   - stage: integration-tests
     script:
       - ./scripts/bash/it-test.sh
+
+  - stage: static-analysis
+    script:
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=dorefactor_todo-app -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=dorefactor -Dsonar.login=$SONAR_TOKEN
 
   - stage: package
     script:
