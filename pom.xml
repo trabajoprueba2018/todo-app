@@ -130,6 +130,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <argLine>@{argLine}</argLine>
                     <forkCount>0</forkCount>
                     <excludes>
                         <exclude>**/*IT.java</exclude>
@@ -163,42 +164,40 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <!--
+                                Sets the name of the property containing the settings
+                                for JaCoCo runtime agent.
+                            -->
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-prepare-agent-integration</id>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-report</id>
+                        <id>report</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>                        </configuration>
+                    </execution>                
                     <execution>
-                        <id>default-report-integration</id>
-                        <goals>
-                            <goal>report-integration</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-check</id>
+                        <id>jacoco-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
                         <configuration>
                             <rules>
-                                <!-- implementation is needed only for Maven 2 -->
-                                <rule implementation="org.jacoco.maven.RuleConfiguration">
-                                    <element>BUNDLE</element>
+                                <rule>
+                                    <element>PACKAGE</element>
                                     <limits>
-                                        <!-- implementation is needed only for Maven 2 -->
-                                        <limit implementation="org.jacoco.report.check.Limit">
-                                            <counter>COMPLEXITY</counter>
+                                        <limit>
+                                            <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.60</minimum>
+                                            <minimum>0.70</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
